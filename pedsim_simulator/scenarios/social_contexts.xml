@@ -2,10 +2,10 @@
 <!--This scenario file was created by SGDiCoP on 2014-04-16T15:14:48-->
 <scenario>
     <!--Obstacles-->
-  <obstacle x1="-0.5" y1="-0.5" x2="29.5" y2="-0.5"/>
-  <obstacle x1="-0.5" y1="-0.5" x2="-0.5" y2="29.5"/>
-  <obstacle x1="-0.5" y1="29.5" x2="29.5" y2="29.5"/>
-	<obstacle x1="29.5" y1="29.5" x2="29.5" y2="-0.5"/>
+  <obstacle x1="-1" y1="-1" x2="30" y2="-1"/>
+  <obstacle x1="-1" y1="-1" x2="-1" y2="30"/>
+  <obstacle x1="-1" y1="30" x2="30" y2="30"/>
+	<obstacle x1="30" y1="30" x2="30" y2="-1"/>
 
   <!--Waypoints (incl. WaitingQueues)-->
   <waypoint id="bookshop_entry" x="25" y="5" r="5"/>

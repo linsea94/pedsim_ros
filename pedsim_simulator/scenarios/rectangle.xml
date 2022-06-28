@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+    <!--square walls (50, 50)-->
+    <obstacle x1="0" y1="0" x2="30" y2="0"/>
+    <obstacle x1="0" y1="0" x2="0" y2="60"/>
+    <obstacle x1="0" y1="60" x2="30" y2="60"/>
+    <obstacle x1="30" y1="60" x2="30" y2="0"/>
+
+    <!--center obstacles  -->
+    <obstacle x1="11.5" y1="21.5" x2="11.5" y2="22.5"/> 
+    <obstacle x1="16.5" y1="32.5" x2="16.5" y2="33.5"/>
+    <obstacle x1="14.5" y1="38.5" x2="14.5" y2="40.5"/>
+    <obstacle x1="24.5" y1="42.5" x2="24.5" y2="44.5"/>
+
+
+    <!-- waypoints -->
+    <waypoint id="pt1" x="8" y="30" r="2" b="1"/>
+    <waypoint id="pt2" x="22" y="30" r="2" b="1"/>
+    
+    <waypoint id="goal" x="16" y="6" r="2" b="2"/>
+    <waypoint id="goal1" x="16" y="54" r="2" b="2"/>
+    
+    <source x="6" y="6" n="3" dx="2" dy="5" type="0">
+        <addwaypoint id="goal1"/>
+    </source>
+    <source x="22" y="6" n="2" dx="2" dy="5" type="0">
+        <addwaypoint id="goal1"/>
+    </source>
+
+    <source x="6" y="54" n="3" dx="2" dy="5" type="0">
+        <addwaypoint id="goal"/>
+    </source>
+    <source x="22" y="54" n="1" dx="2" dy="5" type="0">
+        <addwaypoint id="goal"/>
+    </source>
+
+</scenario>

@@ -1,3 +1,7 @@
+*.bag
+*.csv
+*.txt
+
 .svn
 .svn/*
 *.pyc
