@@ -28,6 +28,13 @@
     <arg name="pose_initial_theta" value="0.7"/>
   </include>
 
+  <node pkg="pedsim_simulator" 
+        name="collect_data" 
+        type="collect_data.py" 
+        output="screen">
+        <param name="file_name" value="test"/>
+  </node>
+
   <!-- Visualizer -->
   <include file="$(find pedsim_visualizer)/launch/visualizer.launch"/>
 

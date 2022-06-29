@@ -1,6 +1,5 @@
 *.bag
 *.csv
-*.txt
 
 .svn
 .svn/*

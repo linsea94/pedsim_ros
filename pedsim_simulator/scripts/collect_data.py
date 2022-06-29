@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
 ##############################################
@@ -18,63 +18,39 @@
 ##############################################
 from genpy.rostime import Duration
 import rospy
-import image_geometry
 import numpy as np
-import math
 import sys
-from campusrover_msgs.msg import BboxAngle, BboxAngleArray
+import pandas as pd
 from visualization_msgs.msg import MarkerArray, Marker
 from geometry_msgs.msg import Point, Vector3, Quaternion
-from pedsim_msgs.msg import AgentGroups, AgentGroup
+from pedsim_msgs.msg import AgentStates, AgentState
 
-from tf.transformations import *
-
-
-obstacles_msg = BboxAngleArray()
-obstacles_msg.header.seq = 0
-
-obstacle_msg = BboxAngle()
+FIRST_TIME = True
+file_name = rospy.get_param("/collect_data/file_name")
+file_path = '/home/linsea/motion_ws/src/pedsim_ros/data_process/datas/'+file_name+'.csv'
 
 
-def save_agent_info(bbox_2d):
-    global CAMERA_MODEL, FIRST_TIME, marker, angle_pub, marker_pub, obstacle_msg, id
+def save_agent_info(agents_info):
+    global FIRST_TIME
 
-    if FIRST_TIME:
-        return
+    agents_lst=[]
 
-    id = 0
+    for item in agents_info.agent_states:
+        agent_info = [agents_info.header.seq, item.id, item.pose.position.x, item.pose.position.z, 
+                        item.pose.position.y, item.twist.linear.x, item.twist.linear.z, item.twist.linear.y]
+        agents_lst.append(agent_info)
 
-    for item in bbox_2d.detections:
-        if (0 < item.results[0].id < 5):
-            # get bbox center
-            points2D = (item.bbox.center.x, item.bbox.center.y)
-
-            obstacle_msg.angle = tmp
-            obstacle_msg.label = item.results[0].id
-            obstacles_msg.obstacles.append(obstacle_msg)
-
-    marker_pub.publish(markers)
-
-    obstacles_msg.header.stamp = rospy.Time.now()
-    obstacles_msg.header.seq = obstacles_msg.header.seq + 1
-
-    angle_pub.publish(obstacles_msg)
+    df2 = pd.DataFrame(agents_lst)
+    df2.columns = ['frame_number', 'ID', 'pos_x', 'pos_z', 'pos_y', 'vel_x', 'vel_z', 'vel_y']
+    
+    with open(file_path,mode= 'a') as f:
+        df2.to_csv(f, header = False, index = False)
 
 
-def camera_info_callback(camera_info):
-    global FIRST_TIME, CAMERA_MODEL
+def listener(agent_info):
 
-    if FIRST_TIME:
-        FIRST_TIME = False
+    rospy.Subscriber(agent_info, AgentStates, save_agent_info)
 
-    # Setup camera model
-        rospy.loginfo('Setting up camera model')
-        CAMERA_MODEL.fromCameraInfo(camera_info)
-
-
-def listener(agent_info, Detection_2D):
-
-    rospy.Subscriber(agent_info, AgentGroups, save_agent_info)
     # Keep python from exiting until this node is stopped
     try:
         print('working')
@@ -85,9 +61,8 @@ def listener(agent_info, Detection_2D):
 
 if __name__ == '__main__':
 
-    rospy.init_node('bbox_project_to_lidar', anonymous=True)
+    rospy.init_node('collect_data', anonymous=True)
 
-    agent_info = '/pedsim_simulator/simulated_agents'
-    Detection_2D = '/detectnet/detections'
+    agents_info = '/pedsim_simulator/simulated_agents'
 
-    listener(camera_info, Detection_2D)
+    listener(agents_info)

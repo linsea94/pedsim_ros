@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+
+    <arg name="bagfile" default="ped.bag" />
+    <arg name="use_sim_time" value="false" />
+
+    <!-- Play rosbag record -->
+    <node 
+        pkg="rosbag"
+        type="play"
+        name="player"
+        output="screen"
+        args="--clock /home/linsea/motion_ws/src/pedsim_ros/data_process/datas/$(arg bagfile)" />
+    
+  <node pkg="pedsim_simulator" 
+        name="collect_data" 
+        type="collect_data.py" 
+        output="screen">
+        <param name="file_name" value="test"/>
+  </node>
+  
+</launch>
