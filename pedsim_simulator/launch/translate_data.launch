@@ -10,7 +10,7 @@
         type="play"
         name="player"
         output="screen"
-        args="--clock /home/linsea/motion_ws/src/pedsim_ros/data_process/datas/$(arg bagfile)" />
+        args="--clock $(find data_process)/data_process/datas/$(arg bagfile)" />
     
   <node pkg="pedsim_simulator" 
         name="collect_data" 

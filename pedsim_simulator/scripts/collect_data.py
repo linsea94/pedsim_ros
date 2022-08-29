@@ -24,10 +24,12 @@ import pandas as pd
 from visualization_msgs.msg import MarkerArray, Marker
 from geometry_msgs.msg import Point, Vector3, Quaternion
 from pedsim_msgs.msg import AgentStates, AgentState
+import os
+home = os.path.expanduser("~")
 
 FIRST_TIME = True
 file_name = rospy.get_param("/collect_data/file_name")
-file_path = '/home/linsea/motion_ws/src/pedsim_ros/data_process/datas/'+file_name+'.csv'
+file_path = home +'/motion_ws/src/pedsim_ros/data_process/datas/'+file_name+'.csv'
 
 
 def save_agent_info(agents_info):
