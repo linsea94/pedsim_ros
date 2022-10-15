@@ -29,14 +29,12 @@ home = os.path.expanduser("~")
 
 FIRST_TIME = True
 file_name = rospy.get_param("/collect_data/file_name")
-file_path = home +'/motion_ws/src/pedsim_ros/data_process/datas/split_data/'+file_name+'.csv'
-
+file_path = home +'/motion_ws/src/pedsim_ros/data_process/split_data/'+file_name+'.csv'
 
 def save_agent_info(agents_info):
     global FIRST_TIME
 
     agents_lst=[]
-
     for item in agents_info.agent_states:
         
         #make time
@@ -56,7 +54,7 @@ def save_agent_info(agents_info):
 
     try:
         df2 = pd.DataFrame(agents_lst)
-        df2.columns = ['time', 'ID', 'pos_x', 'pos_z', 'pos_y', 'vel_x', 'vel_z', 'vel_y']
+        df2.columns = ['time', 'ID', 'pos_x', 'pos_y', 'vel_x', 'vel_y']
 
         with open(file_path,mode= 'a') as f:
             if FIRST_TIME:
